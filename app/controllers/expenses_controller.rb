@@ -8,6 +8,14 @@ class ExpensesController < ApplicationController
       expenses = Expense.where(user: user, approved: params[:approved])
     end
 
+    if !params[:min_amount].nil?
+      expenses = expenses.where('amount > ?', params[:min_amount])
+    end
+
+    if !params[:max_amount].nil?
+      expenses = expenses.where('amount < ?', params[:max_amount])
+    end
+
     render json: expenses
   end
 

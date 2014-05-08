@@ -31,8 +31,29 @@ describe ExpensesController do
 
       expect(response.body).to eq [approved_expense].to_json
     end
-  end
 
-  describe 'create' do
+    it 'filters expenses by min amount' do
+      matching_expense = create(:expense, user: @user, amount: 14.00)
+      other_matching_expense = create(:expense, user: @user, amount: 15.21)
+      not_matching_expense = create(:expense, user: @user, amount: 6.00)
+
+      get :index, user_id: @user.id, min_amount: 10
+
+      expect(response.body).to eq(
+        [matching_expense, other_matching_expense].to_json
+      )
+    end
+
+    it 'filters expenses by max amount' do
+      matching_expense = create(:expense, user: @user, amount: 14.00)
+      other_matching_expense = create(:expense, user: @user, amount: 14.21)
+      not_matching_expense = create(:expense, user: @user, amount: 16.00)
+
+      get :index, user_id: @user.id, max_amount: 15
+
+      expect(response.body).to eq(
+        [matching_expense, other_matching_expense].to_json
+      )
+    end
   end
 end

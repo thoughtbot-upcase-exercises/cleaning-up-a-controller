@@ -13,7 +13,10 @@ FactoryGirl.define do
       "Expense number #{n}"
     end
 
-    approved false
     amount 12.14
+
+    trait :approved do
+      approved true
+    end
   end
 end

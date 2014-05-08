@@ -1,7 +1,12 @@
 class ExpensesController < ApplicationController
   def index
     user = User.find(params[:user_id])
-    expenses = Expense.where(user: user)
+
+    if params[:approved].nil?
+      expenses = Expense.where(user: user)
+    else
+      expenses = Expense.where(user: user, approved: params[:approved])
+    end
 
     render json: expenses
   end

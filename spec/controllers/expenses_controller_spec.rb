@@ -91,4 +91,33 @@ describe ExpensesController do
       post :create, user_id: @user.id, expense: expense.attributes
     end
   end
+
+  describe 'update' do
+    it 'allows an unapproved expense to be updated' do
+      expense = create(:expense, :unapproved, user: @user)
+      new_amount = 24.50
+      expense.amount = new_amount
+
+      put :update, id: expense.id, user_id: @user.id, expense: expense.attributes
+
+      expect(response).to render_template :show
+      expect(assigns(:expense)).to eq expense
+      expect(Expense.find(expense.id).amount).to eq new_amount
+      expect(flash[:notice]).to eq 'Your expense has been successfully updated'
+    end
+
+    it 'does not allow approved expense to be updated' do
+      expense = create(:expense, :approved, user: @user)
+      old_amount = expense.amount
+      new_amount = 24.50
+      expense.amount = new_amount
+
+      put :update, id: expense.id, user_id: @user.id, expense: expense.attributes
+
+      expect(response).to render_template :edit
+      expect(Expense.find(expense.id).amount).to eq old_amount
+      expect(flash[:notice]).to be_nil
+      expect(flash[:error]).to eq 'You cannot update an approved expense'
+    end
+  end
 end

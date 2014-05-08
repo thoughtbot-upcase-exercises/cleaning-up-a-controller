@@ -37,6 +37,18 @@ class ExpensesController < ApplicationController
   end
 
   def update
+    user = User.find(params[:user_id])
+
+    @expense = user.expenses.find(params[:id])
+
+    if !@expense.approved
+      @expense.update_attributes!(expense_params)
+      flash[:notice] = 'Your expense has been successfully updated'
+      render :show
+    else
+      flash[:error] = 'You cannot update an approved expense'
+      render :edit
+    end
   end
 
   def destroy
@@ -45,6 +57,6 @@ class ExpensesController < ApplicationController
   private
 
   def expense_params
-    params.require(:expense).permit(:name, :amount)
+    params.require(:expense).permit(:name, :amount, :approved)
   end
 end

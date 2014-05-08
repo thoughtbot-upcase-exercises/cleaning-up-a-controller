@@ -18,5 +18,9 @@ FactoryGirl.define do
     trait :approved do
       approved true
     end
+
+    trait :unapproved do
+      approved false
+    end
   end
 end

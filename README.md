@@ -3,13 +3,17 @@
 In this exercise, you'll be cleaning up controller called
 `ExpensesController`. This controller can do a few things:
 
-* Creates a new expense for a given user
-* Change attributes of expenses
-* List out existing expenses
-* Mark expenses as `approved` from `pending`
+* List out existing expenses for a user
+* Filter expenses by amount and approval status
+* Create a new expense
+* Email an admin after expenses are created
+* Change name or amount unapproved expenses
 * Delete expenses from the database
 
 ## Exercise!
+
+Before you get started, make sure you run `./bin/setup` to install gems
+and set up your database.
 
 You're going to want to do a few things to the existing controller code:
 

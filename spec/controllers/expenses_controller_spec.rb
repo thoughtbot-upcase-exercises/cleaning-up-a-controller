@@ -76,9 +76,19 @@ describe ExpensesController do
       post :create, user_id: @user.id, expense: expense.attributes
 
       expect(response.status).to eq 400
-      expect(response.body).to contain('There was an error creating your expense')
+      expect(response).to render_template("new")
     end
 
-    it 'emails admin after creation'
+    it 'emails an email address after successful creation' do
+      expense = build(:expense)
+      email_body = "#{expense.name} by #{@user.full_name} needs to be approved"
+      email_address = "admin@expensr.com"
+
+      expect(ExpenseMailer).to receive(:new)
+        .with(address: email_address, body: email_body)
+        .and_call_original
+
+      post :create, user_id: @user.id, expense: expense.attributes
+    end
   end
 end

@@ -17,13 +17,22 @@ class ExpensesController < ApplicationController
     end
   end
 
+  def new
+  end
+
   def create
     user = User.find(params[:user_id])
 
     @expense = user.expenses.new(expense_params)
 
     if @expense.save
+      email_body = "#{@expense.name} by #{user.full_name} needs to be approved"
+      mailer = ExpenseMailer.new(address: 'admin@expensr.com', body: email_body)
+      mailer.deliver
+
       redirect_to user_expenses_path(user)
+    else
+      render :new, status: :bad_request
     end
   end
 

@@ -51,6 +51,13 @@ class ExpensesController < ApplicationController
     end
   end
 
+  def approve
+    @expense = Expense.find(params[:expense_id])
+    @expense.update_attributes!(approved: true)
+
+    render :show
+  end
+
   def destroy
   end
 

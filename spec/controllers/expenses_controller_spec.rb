@@ -120,4 +120,16 @@ describe ExpensesController do
       expect(flash[:error]).to eq 'You cannot update an approved expense'
     end
   end
+
+  describe 'approve' do
+    it 'approves an unapproved expense' do
+      expense = create(:expense, :unapproved, user: @user)
+
+      get :approve, expense_id: expense.id, user_id: @user.id
+
+      expect(response).to render_template :show
+      expect(Expense.find(expense.id).approved?).to be_true
+    end
+  end
+
 end

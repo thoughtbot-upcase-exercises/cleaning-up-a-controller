@@ -132,4 +132,16 @@ describe ExpensesController do
     end
   end
 
+  describe 'destroy' do
+    it 'deletes an expense' do
+      expense = create(:expense, user: @user)
+
+      delete :destroy, id: expense.id, user_id: @user.id
+
+      expense.reload
+
+      expect(response).to render_template :index
+      expect(expense.deleted).to be_true
+    end
+  end
 end

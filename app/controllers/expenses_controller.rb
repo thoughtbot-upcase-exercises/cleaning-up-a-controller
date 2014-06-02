@@ -59,6 +59,10 @@ class ExpensesController < ApplicationController
   end
 
   def destroy
+    expense = Expense.find(params[:id])
+    expense.update_attributes!(deleted: true)
+
+    render :index
   end
 
   private

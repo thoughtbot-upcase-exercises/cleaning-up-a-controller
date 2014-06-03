@@ -1,0 +1,12 @@
+<div class="expense">
+  <% @expenses.each do |expense| %>
+    <%= expense.name %>
+    <%= number_to_currency expense.amount %>
+
+    <% if expense.approved? %>
+      Approved
+    <% else %>
+      <a href='approve'>approve</a>
+    <% end %>
+  <% end %>
+</div>

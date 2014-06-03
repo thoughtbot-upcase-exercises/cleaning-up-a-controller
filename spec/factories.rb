@@ -14,6 +14,7 @@ FactoryGirl.define do
     end
 
     amount 12.14
+    user
 
     trait :approved do
       approved true

@@ -100,7 +100,7 @@ describe ExpensesController do
 
       put :update, id: expense.id, user_id: @user.id, expense: expense.attributes
 
-      expect(response).to render_template :show
+      expect(response).to redirect_to user_expenses_path(@user)
       expect(assigns(:expense)).to eq expense
       expect(Expense.find(expense.id).amount).to eq new_amount
       expect(flash[:notice]).to eq 'Your expense has been successfully updated'

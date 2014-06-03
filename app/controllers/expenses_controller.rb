@@ -1,11 +1,11 @@
 class ExpensesController < ApplicationController
   def index
-    user = User.find(params[:user_id])
+    @user = User.find(params[:user_id])
 
     if params[:approved].nil?
-      @expenses = Expense.where(user: user)
+      @expenses = Expense.where(user: @user, deleted: false)
     else
-      @expenses = Expense.where(user: user, approved: params[:approved])
+      @expenses = Expense.where(user: @user, approved: params[:approved], deleted: false)
     end
 
     if !params[:min_amount].nil?
@@ -18,6 +18,7 @@ class ExpensesController < ApplicationController
   end
 
   def new
+    @user = User.find(params[:user_id])
   end
 
   def create

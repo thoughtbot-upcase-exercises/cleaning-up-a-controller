@@ -6,7 +6,7 @@
     <% if expense.approved? %>
       Approved
     <% else %>
-      <a href='approve'>approve</a>
+      <a href="<%= user_expense_approve_path(expense, user_id: @user.id) %>">approve</a>
     <% end %>
   <% end %>
 </div>

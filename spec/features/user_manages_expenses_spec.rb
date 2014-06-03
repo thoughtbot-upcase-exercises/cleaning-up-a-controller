@@ -20,8 +20,18 @@ feature 'user manages expense' do
   scenario 'creates an expense' do
     visit new_user_expense_path(user_id: user.id)
 
-    fill_in 'name', with: 'Dinner 5/12/2014'
-    fill_in 'amount', with: '50.21'
-    click_button 'Submit'
+    fill_in 'expense_name', with: 'Dinner 5/12/2014'
+    fill_in 'expense_amount', with: '50.21'
+    click_button 'Save Expense'
+  end
+
+  scenario 'approve an expense' do
+    expense = create(:expense, :unapproved, user: user, amount: 15.00)
+
+    visit user_expenses_path(user_id: user.id)
+    click_link 'approve'
+
+    visit user_expenses_path(user_id: user.id)
+    expect(page).to have_content "#{expense.name} $15.00 Approved"
   end
 end

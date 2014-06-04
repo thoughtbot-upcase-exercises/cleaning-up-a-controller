@@ -34,4 +34,14 @@ feature 'user manages expense' do
     visit user_expenses_path(user_id: user.id)
     expect(page).to have_content "#{expense.name} $15.00 Approved"
   end
+
+  scenario 'delete an expense' do
+    expense = create(:expense, :unapproved, user: user, amount: 15.00)
+    visit user_expenses_path(user_id: user.id)
+
+    click_link 'delete'
+
+    visit user_expenses_path(user_id: user.id)
+    expect(page).not_to have_content "#{expense.name} $15.00 Approved"
+  end
 end

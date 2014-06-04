@@ -1,0 +1,14 @@
+<div class="expense">
+  <% @expenses.each do |expense| %>
+    <%= expense.name %>
+    <%= number_to_currency expense.amount %>
+
+    <% if expense.approved? %>
+      Approved
+    <% else %>
+      <a href="<%= user_expense_approve_path(expense, user_id: @user.id) %>">approve</a>
+    <% end %>
+
+    <%= link_to 'delete', user_expense_path(expense, user_id: @user.id), method: :delete %>
+  <% end %>
+</div>

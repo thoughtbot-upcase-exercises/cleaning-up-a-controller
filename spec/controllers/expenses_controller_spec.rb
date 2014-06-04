@@ -140,7 +140,7 @@ describe ExpensesController do
 
       expense.reload
 
-      expect(response).to render_template :index
+      expect(response).to redirect_to user_expenses_path(user_id: @user.id)
       expect(expense.deleted).to be_true
     end
   end

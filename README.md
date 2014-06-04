@@ -8,7 +8,7 @@ In this exercise, you'll be cleaning up controller called
 * Create a new expense
 * Email an admin after expenses are created
 * Change name or amount unapproved expenses
-* Delete expenses from the database
+* Mark expenses as deleted
 
 ## Exercise!
 

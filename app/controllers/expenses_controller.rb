@@ -3,9 +3,9 @@ class ExpensesController < ApplicationController
     @user = User.find(params[:user_id])
 
     if params[:approved].nil?
-      @expenses = Expense.where(user: @user, deleted: false)
+      @expenses = @user.expenses.where(deleted: false)
     else
-      @expenses = Expense.where(user: @user, approved: params[:approved], deleted: false)
+      @expenses = @user.expenses.where(approved: params[:approved], deleted: false)
     end
 
     if !params[:min_amount].nil?

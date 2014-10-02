@@ -133,5 +133,14 @@ describe ExpensesController do
       expect(response).to redirect_to user_expenses_path(user_id: @user.id)
       expect(expense.deleted).to be_true
     end
+
+    it "does not delete another users's expense" do
+      other_user = create(:user)
+      expense = create(:expense, user: other_user)
+
+      expect {
+        delete :destroy, id: expense.id, user_id: @user.id
+      }.to raise_error
+    end
   end
 end

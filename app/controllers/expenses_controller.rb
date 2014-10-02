@@ -45,7 +45,7 @@ class ExpensesController < ApplicationController
     if !@expense.approved
       @expense.update_attributes!(expense_params)
       flash[:notice] = 'Your expense has been successfully updated'
-      redirect_to user_expenses_path(user_id: user.id)
+      redirect_to user_expenses_path(user)
     else
       flash[:error] = 'You cannot update an approved expense'
       render :edit
@@ -57,7 +57,7 @@ class ExpensesController < ApplicationController
     user = User.find(params[:user_id])
     expense.update_attributes!(deleted: true)
 
-    redirect_to user_expenses_path(user_id: user.id)
+    redirect_to user_expenses_path(user)
   end
 
   private

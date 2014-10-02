@@ -31,7 +31,6 @@ class ExpensesController < ApplicationController
 
   def update
     user = User.find(params[:user_id])
-
     @expense = user.expenses.find(params[:id])
 
     if !@expense.approved?

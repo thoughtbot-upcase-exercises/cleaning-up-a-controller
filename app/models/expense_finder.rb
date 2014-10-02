@@ -1,6 +1,6 @@
 class ExpenseFinder
-  def initialize(scope)
-    @scope = scope.where(deleted: false)
+  def initialize(expenses_scope)
+    @scope = expenses_scope.not_deleted
   end
 
   def find

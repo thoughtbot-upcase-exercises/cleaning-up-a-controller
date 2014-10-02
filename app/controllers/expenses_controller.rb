@@ -1,12 +1,11 @@
 class ExpensesController < ApplicationController
   def index
     @user = User.find(params[:user_id])
-    @expenses = ExpenseFinder.new(
-      @user.expenses,
-      approved: params[:approved],
-      min_amount: params[:min_amount],
-      max_amount: params[:max_amount]
-    ).find
+    @expenses = ExpenseFinder.new(@user.expenses).
+      approved_filter(params[:approved]).
+      min_amount_filter(params[:min_amount]).
+      max_amount_filter(params[:max_amount]).
+      find
   end
 
   def new

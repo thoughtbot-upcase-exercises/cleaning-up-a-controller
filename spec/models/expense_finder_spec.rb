@@ -16,7 +16,8 @@ describe ExpenseFinder do
   it "can filter for unapproved expenses" do
     unapproved = create(:expense, :unapproved, user: @user)
     approved = create(:expense, :approved, user: @user)
-    finder = ExpenseFinder.new(@user.expenses, approved: false)
+    finder = ExpenseFinder.new(@user.expenses)
+    finder.approved_filter(false)
 
     expect(finder.find).to eq [unapproved]
   end
@@ -24,7 +25,8 @@ describe ExpenseFinder do
   it "can filter for approved expenses" do
     unapproved = create(:expense, :unapproved, user: @user)
     approved = create(:expense, :approved, user: @user)
-    finder = ExpenseFinder.new(@user.expenses, approved: true)
+    finder = ExpenseFinder.new(@user.expenses)
+    finder.approved_filter(true)
 
     expect(finder.find).to eq [approved]
   end
@@ -32,7 +34,8 @@ describe ExpenseFinder do
   it "can filter by min_amount" do
     less = create(:expense, user: @user, amount: 40)
     greater = create(:expense, user: @user, amount: 100)
-    finder = ExpenseFinder.new(@user.expenses, min_amount: 80)
+    finder = ExpenseFinder.new(@user.expenses)
+    finder.min_amount_filter(80)
 
     expect(finder.find).to eq [greater]
   end
@@ -40,7 +43,8 @@ describe ExpenseFinder do
   it "can filter by max_amount" do
     less = create(:expense, user: @user, amount: 40)
     greater = create(:expense, user: @user, amount: 100)
-    finder = ExpenseFinder.new(@user.expenses, max_amount: 80)
+    finder = ExpenseFinder.new(@user.expenses)
+    finder.max_amount_filter(80)
 
     expect(finder.find).to eq [less]
   end

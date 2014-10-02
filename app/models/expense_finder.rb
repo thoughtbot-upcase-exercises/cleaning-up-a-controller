@@ -1,40 +1,30 @@
 class ExpenseFinder
-  def initialize(scope, approved: nil, min_amount: nil, max_amount: nil)
+  def initialize(scope)
     @scope = scope.where(deleted: false)
-    @approved = approved
-    @min_amount = min_amount
-    @max_amount = max_amount
   end
 
   def find
-    new_scope = approved_filter(@scope)
-    new_scope = min_amount_filter(new_scope)
-    max_amount_filter(new_scope)
+    @scope
   end
 
-  private
-
-  def min_amount_filter(scope)
-    if @min_amount.nil?
-      scope
-    else
-      scope.where("amount > ?", @min_amount)
+  def approved_filter(approved)
+    unless approved.nil?
+      @scope = @scope.where(approved: approved)
     end
+    self
   end
 
-  def max_amount_filter(scope)
-    if @max_amount.nil?
-      scope
-    else
-      scope.where("amount < ?", @max_amount)
+  def min_amount_filter(min_amount)
+    unless min_amount.nil?
+      @scope = @scope.where("amount > ?", min_amount)
     end
+    self
   end
 
-  def approved_filter(scope)
-    if @approved.nil?
-      scope
-    else
-      @scope.where(approved: @approved)
+  def max_amount_filter(max_amount)
+    unless max_amount.nil?
+      @scope = @scope.where("amount < ?", max_amount)
     end
+    self
   end
 end

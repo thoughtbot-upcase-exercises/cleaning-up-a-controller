@@ -11,7 +11,7 @@ feature 'user manages expense' do
     visit user_expenses_path(user_id: user.id)
 
     within '.expenses' do
-      expect(page).to have_content "#{expense.name} $15.00 approve"
+      expect(page).to have_content "#{expense.name} $15.00 delete"
       expect(page).to have_content "#{approved_expense.name} $12.12 Approved"
       expect(page).to_not have_content "#{other_expense.name}"
     end
@@ -29,7 +29,7 @@ feature 'user manages expense' do
     expense = create(:expense, :unapproved, user: user, amount: 15.00)
 
     visit user_expenses_path(user_id: user.id)
-    click_link 'approve'
+    click_on "approve"
 
     visit user_expenses_path(user_id: user.id)
     expect(page).to have_content "#{expense.name} $15.00 Approved"

@@ -52,13 +52,6 @@ class ExpensesController < ApplicationController
     end
   end
 
-  def approve
-    @expense = Expense.find(params[:expense_id])
-    @expense.update_attributes!(approved: true)
-
-    render :show
-  end
-
   def destroy
     expense = Expense.find(params[:id])
     user = User.find(params[:user_id])

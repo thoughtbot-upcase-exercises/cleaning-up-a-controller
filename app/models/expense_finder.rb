@@ -9,7 +9,7 @@ class ExpenseFinder
   def find
     new_scope = approved_filter(@scope)
     new_scope = min_amount_filter(new_scope)
-    new_scope = max_amount_filter(new_scope)
+    max_amount_filter(new_scope)
   end
 
   private

@@ -1,20 +1,12 @@
 class ExpensesController < ApplicationController
   def index
     @user = User.find(params[:user_id])
-
-    if params[:approved].nil?
-      @expenses = @user.expenses.where(deleted: false)
-    else
-      @expenses = @user.expenses.where(approved: params[:approved], deleted: false)
-    end
-
-    if !params[:min_amount].nil?
-      @expenses = @expenses.where('amount > ?', params[:min_amount])
-    end
-
-    if !params[:max_amount].nil?
-      @expenses = @expenses.where('amount < ?', params[:max_amount])
-    end
+    @expenses = ExpenseFinder.new(
+      @user.expenses,
+      approved: params[:approved],
+      min_amount: params[:min_amount],
+      max_amount: params[:max_amount]
+    ).find
   end
 
   def new

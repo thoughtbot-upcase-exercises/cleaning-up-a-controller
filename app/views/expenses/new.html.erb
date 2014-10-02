@@ -1,4 +1,4 @@
-<%= form_for :expense, url: user_expenses_path(@user) do |f| %>
+<%= form_for [@user, @expense] do |f| %>
   <p>
     <%= f.label :name %>
     <%= f.text_field :name %>
@@ -10,6 +10,6 @@
   </p>
 
   <p>
-    <%= f.submit %>
+    <%= f.submit "Save Expense" %>
   </p>
 <% end %>

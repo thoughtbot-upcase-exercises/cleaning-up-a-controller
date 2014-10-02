@@ -23,6 +23,8 @@ feature 'user manages expense' do
     fill_in 'expense_name', with: 'Dinner 5/12/2014'
     fill_in 'expense_amount', with: '50.21'
     click_button 'Save Expense'
+
+    expect(page).to have_content "Dinner 5/12/2014 $50.21"
   end
 
   scenario 'approve an expense' do

@@ -19,6 +19,7 @@ class ExpensesController < ApplicationController
 
   def new
     @user = User.find(params[:user_id])
+    @expense = Expense.new
   end
 
   def create

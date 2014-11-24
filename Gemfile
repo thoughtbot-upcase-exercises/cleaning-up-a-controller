@@ -1,7 +1,5 @@
 source 'https://rubygems.org'
 
-ruby '2.1.0'
-
 gem 'pg'
 gem 'rack-timeout'
 gem 'rails', '>= 4.0.0'
